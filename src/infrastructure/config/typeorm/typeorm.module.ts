@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
+import { User } from 'src/users/entities/user.entity';
 
 @Module({
     imports: [
@@ -13,11 +14,10 @@ import { ConfigService } from '@nestjs/config';
                     host: "localhost",
                     port: 5432,
                     username: "postgres",
-                    password: "postgres",
-                    database: "template0",
-                    entities: [__dirname + './../../**/*.entity{.ts,.js}'],
-                    synchronize: false,
-                    schema: process.env.DATABASE_SCHEMA,
+                    password: "cosme",
+                    database: "schedule",
+                    entities: [User],
+                    synchronize: true,
                 }
             ),
         }),

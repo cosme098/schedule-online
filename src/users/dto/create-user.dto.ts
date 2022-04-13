@@ -8,6 +8,10 @@ export class CreateUserDto {
 
     @ApiProperty()
     @IsEmail()
+    username: string;
+
+    @ApiProperty()
+    @IsEmail()
     email: string;
 
     @ApiProperty()

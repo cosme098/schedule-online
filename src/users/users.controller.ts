@@ -1,28 +1,31 @@
 
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
-import { FindUserDto } from './dto/find-user.dto';
 import { UpdateUserDto } from './dto/update-username.dto';
+import { UsersService } from './users.service';
 
 @ApiTags("users")
-@Controller("users")
+@Controller("api/users")
 export class UsersController {
 
-    constructor() { }
+    constructor(private readonly test: UsersService) { }
 
     @Post()
     async create(@Body() user: CreateUserDto) {
-        return "This action adds a new user";
+        return this.test.create(user);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":username")
-    async findOne(@Body() username: FindUserDto) {
-        return `This action returns a #${username}`;
+    async findOne(@Body() username: any) {
+        return this.test.findOne(username);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Patch(":username")
     async update(@Body() user: UpdateUserDto) {
-        return `This action updates a #${user.username}`;
+        return this.test.update(user);
     }
 }
