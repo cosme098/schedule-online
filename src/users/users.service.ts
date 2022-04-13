@@ -16,8 +16,11 @@ export class UsersService {
     async create(newUser: CreateUserDto): Promise<any> {
         return this.user.save(newUser);
     }
-    async findOne(username: FindOneOptions<User>): Promise<any> {
-        return this.user.findOne(username);
+    async findByEmail(email: string): Promise<any> {
+        return this.user.findOneOrFail({ where: { email: email } });
+    }
+    async findAll() {
+        return this.user.find();
     }
     async update(userUpdate: UpdateUserDto): Promise<any> {
         return this.user.update(userUpdate?.id, userUpdate);
